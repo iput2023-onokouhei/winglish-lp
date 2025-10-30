@@ -1,0 +1,776 @@
+/* ==============================
+   テーマ変数 (Discord風デザイン)
+============================== */
+:root {
+  /* フォント (Discord風) */
+  --font-family-base: "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+  
+  /* 共通のアクセントカラー (Discord Blurple) */
+  --color-accent: #7289da;
+  --color-accent-light: #8ea1e1;
+  --color-accent-dark: #5f73bc;
+  
+  /* アニメーション用 */
+  --transition-speed: 0.3s;
+}
+
+/* テーマ①: Discord Light Mode
+   data-theme="light"
+*/
+[data-theme="light"] {
+  --color-bg: #fff; /* メイン背景 */
+  --color-bg-alt: #f2f3f5; /* セクション背景 */
+  --color-text: #2e3338; /* メインテキスト */
+  --color-text-sub: #5c626b; /* サブテキスト */
+  --color-surface-bg: #f2f3f5; /* カード背景 */
+  --color-surface-border: #e3e5e8; /* 境界線 */
+  --color-header-bg: #fff; /* ヘッダー背景 */
+  --color-btn-primary-bg: var(--color-accent);
+  --color-btn-primary-text: #fff;
+  --color-btn-ghost-bg: transparent;
+  --color-btn-ghost-text: var(--color-accent);
+  --color-btn-ghost-border: var(--color-accent);
+  --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.05);
+  --shadow-btn: 0 4px 10px rgba(114, 137, 218, 0.3);
+  --backdrop-filter: none; /* ガラスモダン廃止 */
+  --color-demo-correct: #22C55E;
+  --color-demo-wrong: #EF4444;
+}
+
+/* テーマ②: Discord Dark Mode
+   data-theme="dark"
+*/
+[data-theme="dark"] {
+  --color-bg: #36393f; /* メイン背景 */
+  --color-bg-alt: #2f3136; /* セクション背景 */
+  --color-text: #dcddde; /* メインテキスト */
+  --color-text-sub: #b9bbbe; /* サブテキスト */
+  --color-surface-bg: #2f3136; /* カード背景 */
+  --color-surface-border: #282b30; /* 境界線 */
+  --color-header-bg: #2f3136; /* ヘッダー背景 */
+  --color-btn-primary-bg: var(--color-accent);
+  --color-btn-primary-text: #fff;
+  --color-btn-ghost-bg: transparent;
+  --color-btn-ghost-text: var(--color-accent-light);
+  --color-btn-ghost-border: var(--color-accent-light);
+  --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.2);
+  --shadow-btn: 0 4px 10px rgba(114, 137, 218, 0.2);
+  --backdrop-filter: none; /* ガラスモダン廃止 */
+  --color-demo-correct: #4ADE80;
+  --color-demo-wrong: #F87171;
+}
+
+/* ==============================
+   基本設定
+============================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+  padding-bottom: 80px; 
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* スクロール進捗バー */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--color-accent-light);
+  width: 0%;
+  z-index: 2000;
+}
+
+
+/* ==============================
+   ヘッダー (Discord風)
+============================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--color-header-bg);
+  /* ▼ ガラスモダン廃止 ▼ */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  /* ▲ ガラスモダン廃止 ▲ */
+  border-bottom: 1px solid var(--color-surface-border);
+  transition: background var(--transition-speed) ease, padding 0.3s ease-out, border-color var(--transition-speed) ease;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  transition: padding 0.3s ease-out;
+}
+
+/* スクロール時のヘッダースタイル */
+.site-header.is-scrolled {
+  background: var(--color-header-bg); 
+  backdrop-filter: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+[data-theme="dark"] .site-header.is-scrolled {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.site-header.is-scrolled .header-inner {
+  padding: 8px 0;
+}
+
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-accent);
+}
+
+/* テーマ切り替えボタン */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: 10px;
+  color: var(--color-text);
+}
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  display: block;
+  transition: transform 0.3s ease;
+}
+[data-theme="light"] .theme-toggle .icon-sun { 
+  display: none; 
+}
+[data-theme="dark"] .theme-toggle .icon-moon { 
+  display: none; 
+}
+.theme-toggle:hover .icon-sun { transform: rotate(45deg); }
+.theme-toggle:hover .icon-moon { transform: rotate(15deg); }
+
+
+.hamburger {
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+/* ==============================
+   グローバルナビ (Discord風)
+============================== */
+.global-nav {
+  display: none;
+  flex-direction: column;
+  background: var(--color-header-bg);
+  /* ▼ ガラスモダン廃止 ▼ */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  /* ▲ ガラスモダン廃止 ▲ */
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  border-top: 1px solid var(--color-surface-border);
+}
+
+.global-nav a {
+  padding: 15px 10px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
+  font-weight: normal;
+}
+
+.global-nav a:hover {
+  background: var(--color-surface-bg);
+  color: var(--color-accent);
+}
+
+/* スクロール連動ハイライト */
+.global-nav a.nav-active {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.global-nav.open {
+  display: flex;
+}
+
+/* ==============================
+   Hero セクション
+============================== */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background var(--transition-speed) ease;
+}
+[data-theme="dark"] .hero-overlay {
+  background: rgba(30, 41, 59, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.accent {
+  color: var(--color-accent-light);
+}
+
+.hero-ctas .btn {
+  margin: 10px;
+}
+
+/* ==============================
+   ボタン (Discord風)
+============================== */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500; /* Discord風 */
+  border-radius: 5px; /* Discord風 */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn.primary {
+  background: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  box-shadow: var(--shadow-btn);
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn.ghost {
+  background: var(--color-btn-ghost-bg);
+  border: 2px solid var(--color-btn-ghost-border);
+  color: var(--color-btn-ghost-text);
+}
+
+.btn.ghost:hover {
+  background: var(--color-btn-ghost-border);
+  color: var(--color-btn-primary-text);
+}
+
+
+/* ==============================
+   セクション & カード (Discord風)
+============================== */
+.section {
+  padding: 80px 0;
+  overflow-x: hidden;
+}
+.section-subtext {
+  text-align: center;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  color: var(--color-text-sub);
+}
+
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 1.8rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* カード類 (Discord風) */
+.feature-card, .card, .persona, .faq, .voice {
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-surface-border);
+  /* ▼ ガラスモダン廃止 ▼ */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  /* ▲ ガラスモダン廃止 ▲ */
+  border-radius: 8px; /* Discord風 */
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: background var(--transition-speed) ease, transform 0.2s ease-out;
+}
+
+/* ▼ 3Dホバー廃止 → シンプルなホバーに変更 ▼ */
+.feature-card:hover, .card:hover, .persona:hover, .faq:hover, .voice:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+[data-theme="dark"] .feature-card:hover, 
+[data-theme="dark"] .card:hover, 
+[data-theme="dark"] .persona:hover, 
+[data-theme="dark"] .faq:hover, 
+[data-theme="dark"] .voice:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* 3Dホバーのラッパー（不要になったが、JSエラー回避のため残す） */
+.card-3d-wrap {
+  perspective: none;
+}
+
+
+/* .section-dark (Discord風) */
+.section-dark {
+  background: var(--color-bg-alt);
+  transition: background var(--transition-speed) ease;
+}
+
+[data-theme="dark"] .section-dark .section-title {
+  color: #fff;
+}
+
+/* リスト要素のスタイル */
+.features-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.cards {
+  display: grid;
+  gap: 20px;
+}
+
+.updates-list {
+  list-style: none;
+  padding: 20px;
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-surface-border);
+  border-radius: 8px;
+}
+
+.persona-cards {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .features-list, .cards, .persona-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ==============================
+   スクロールアニメーション (Intersection Observer)
+============================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(5px);
+  transition: opacity 0.8s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.reveal:nth-child(2) { transition-delay: 0.1s; }
+.reveal:nth-child(3) { transition-delay: 0.2s; }
+.reveal:nth-child(4) { transition-delay: 0.3s; }
+
+/* ==============================
+   スライダーUI改善
+============================== */
+.slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-surface-border);
+  box-shadow: var(--shadow-card);
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slides.is-swiping {
+  transition: none;
+}
+
+.slide img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+}
+
+.slider-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.slider-dots {
+  text-align: center;
+  margin-top: 0;
+  position: static;
+  transform: none;
+  background: none;
+  padding: 0;
+  backdrop-filter: none;
+}
+
+.slider-dots .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  margin: 0 5px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.slider-dots .dot.active {
+  opacity: 1;
+  transform: scale(1.3);
+  background: var(--color-accent-light);
+}
+
+/* ▼▼▼ インタラクティブ・デモ (Discord風) ▼▼▼ */
+.demo-widget {
+  border-top: 1px solid var(--color-surface-border);
+  margin-top: 20px;
+  padding-top: 15px;
+}
+.demo-question {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+.demo-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.demo-options button {
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  padding: 10px;
+  border: 1px solid var(--color-surface-border);
+  background: var(--color-bg); /* カード背景より一段明るく */
+  color: var(--color-text);
+  border-radius: 5px; /* Discord風 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+[data-theme="dark"] .demo-options button {
+  background: var(--color-bg);
+}
+.demo-options button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+/* JSで付与されるクラス */
+.demo-options button.correct {
+  background: var(--color-demo-correct);
+  color: #fff;
+  border-color: var(--color-demo-correct);
+}
+.demo-options button.wrong {
+  background: var(--color-demo-wrong);
+  color: #fff;
+  border-color: var(--color-demo-wrong);
+  opacity: 0.7;
+}
+.demo-result {
+  margin-top: 10px;
+  font-weight: bold;
+  height: 1.2em;
+}
+.demo-result.correct {
+  color: var(--color-demo-correct);
+}
+.demo-result.wrong {
+  color: var(--color-demo-wrong);
+}
+/* ▲▲▲ デモ 変更ここまで ▲▲▲ */
+
+
+/* ==============================
+   その他要素 (FAQなど)
+============================== */
+.faq {
+  margin-bottom: 10px;
+}
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-accent);
+  transition: color var(--transition-speed) ease;
+}
+.faq[open] {
+  background: var(--color-bg-alt);
+}
+.faq p {
+  padding-top: 10px;
+  color: var(--color-text-sub);
+}
+
+/* CTAセクション */
+.section.cta {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-surface-border);
+  box-shadow: 0 -5px 15px rgba(0,0,0, 0.05);
+}
+[data-theme="dark"] .section.cta {
+  box-shadow: 0 -5px 15px rgba(0,0,0, 0.2);
+}
+
+/* ==============================
+   フッター
+============================== */
+.site-footer {
+  text-align: center;
+  padding: 30px 20px;
+  background: transparent;
+  color: var(--color-text-sub);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--color-surface-border);
+  transition: color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+
+/* ==============================
+   追加したボタンスタイル
+============================== */
+
+/* スライダー停止/再生ボタン */
+.slider-toggle {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  padding: 5px;
+  line-height: 1;
+}
+.slider-toggle:hover {
+  opacity: 1;
+}
+
+.slider-toggle .icon-play {
+  display: none;
+}
+
+.slider.is-paused .slider-toggle .icon-pause {
+  display: none;
+}
+.slider.is-paused .slider-toggle .icon-play {
+  display: block;
+}
+
+/* ==============================
+   ページトップに戻るボタン
+============================== */
+.page-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  
+  transition: opacity 0.4s, visibility 0.4s, transform 0.4s;
+  z-index: 900;
+}
+
+.page-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.page-top-btn:hover {
+  background: var(--color-accent-dark);
+  transform: translateY(-2px);
+}
+
+/* ==============================
+   ▼▼▼ 追従CTAフッター (Discord風) ▼▼▼
+============================== */
+.sticky-footer-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--color-header-bg); /* ヘッダーと色を合わせる */
+  /* ▼ ガラスモダン廃止 ▼ */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  /* ▲ ガラスモダン廃止 ▲ */
+  border-top: 1px solid var(--color-surface-border);
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  z-index: 800; 
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease-out, visibility 0.4s ease-out, transform 0.4s ease-out;
+}
+[data-theme="dark"] .sticky-footer-cta {
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* JSで .is-visible を付与 */
+.sticky-footer-cta.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sticky-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.sticky-footer-inner p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text-sub);
+}
+.sticky-footer-inner .btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+/* スマホではテキストを隠す */
+@media (max-width: 600px) {
+  .sticky-footer-inner p {
+    display: none;
+  }
+  .sticky-footer-inner {
+    justify-content: center;
+  }
+}
+/* ▲▲▲ 追従CTAフッター 変更ここまで ▲▲▲ */
+
+
+/* ==============================
+   アクセシビリティ対応（動きの抑制）
+============================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .slides {
+    transition: none;
+  }
+  /* 3Dホバー削除により関連スタイル不要に */
+  .card-3d-wrap {
+    perspective: none;
+  }
+  .feature-card, .card, .persona, .faq, .voice {
+    transition: background var(--transition-speed) ease;
+  }
+  .feature-card:hover, .card:hover, .persona:hover, .faq:hover, .voice:hover {
+    transform: none;
+  }
+  /* 追従フッターのアニメーションを無効化 */
+  .sticky-footer-cta {
+    transition: none;
+  }
+}
