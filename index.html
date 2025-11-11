@@ -1,21 +1,30 @@
 <!doctype html>
 <html lang="ja">
 <head>
+  <!-- 文字コードとレスポンシブ設定 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- ページタイトル -->
   <title>Winglish｜Discordで、パーソナライズ英語学習を。</title>
 
+  <!-- SNS共有用のOGP設定 -->
   <meta property="og:title" content="Winglish｜Discordで、パーソナライズ英語学習を。" />
   <meta property="og:description" content="Winglishは、英単語・英文解釈・長文読解の3要素を、あなた専用のプライベートチャンネルで最適化する学習Botです。" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://winglish.site/" /> 
-  <meta property="og:image" content="https://winglish.site/images/ogp-image.png" /> 
+  <meta property="og:url" content="https://winglish.site/" />
+  <meta property="og:image" content="https://winglish.site/images/ogp-image.png" />
   <meta property="og:site_name" content="Winglish" />
   <meta property="og:locale" content="ja_JP" />
   <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ヒーローセクションの動画を先読み -->
   <link rel="preload" href="video/hero-bg.mp4" as="video" type="video/mp4">
+
+  <!-- 外部CSS読み込み -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- 構造化データ（検索エンジン用 JSON-LD形式） -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,22 +61,31 @@
     }
   }
   </script>
-  </head>
+</head>
 <body>
 
+  <!-- スクロール進行度バー -->
   <div class="progress-bar" id="progressBar"></div>
 
+  <!-- ===========================
+        ヘッダー領域
+  ============================ -->
   <header class="site-header">
     <div class="container header-inner">
+      <!-- ロゴ（テキスト形式） -->
       <div class="logo" aria-label="Winglish ロゴ">Winglish</div>
       
+      <!-- テーマ切り替えボタン（ライト / ダーク） -->
       <button id="themeToggleBtn" class="theme-toggle" aria-label="テーマ切り替え">
         <span class="icon-sun">☀️</span>
         <span class="icon-moon">🌙</span>
       </button>
 
+      <!-- ハンバーガーメニュー（SP用） -->
       <button id="menuBtn" class="hamburger" aria-label="メニュー開閉" aria-expanded="false">☰</button>
     </div>
+
+    <!-- ナビゲーションメニュー -->
     <nav id="globalNav" class="global-nav" aria-hidden="true">
       <a href="#hero">トップ</a>
       <a href="#reason">Winglishの強み</a>
@@ -77,9 +95,14 @@
       <a href="#updates">今後の予定</a>
       <a href="#faq">FAQ</a>
     </nav>
-    </header>
+  </header>
 
+  <!-- ===========================
+        メインコンテンツ開始
+  ============================ -->
   <main>
+
+    <!-- ヒーローセクション（最上部動画背景） -->
     <section id="hero" class="hero">
       <video class="hero-video" autoplay muted loop playsinline>
         <source src="video/hero-bg.mp4" type="video/mp4">
@@ -95,55 +118,63 @@
           Winglishは、英単語・英文解釈・長文読解の3要素を、<br>
           あなた専用のプライベートチャンネルで最適化する学習Botです。
         </p>
+        <!-- CTA（行動喚起）ボタン -->
         <div class="hero-ctas">
           <a class="btn primary" href="https://discord.gg/eSC9a4erQx" target="_blank" rel="noopener noreferrer">▶ 専用チャンネルを作成</a>
           <a class="btn ghost" href="#how-to-use">▶ 使い方を見る</a>
         </div>
-        </div>
+      </div>
     </section>
 
+    <!-- Winglishの強み -->
     <section id="reason" class="section">
       <div class="container">
         <h2 class="section-title">Winglishが選ばれる理由</h2>
         <p class="section-subtext">Winglishは「学習の個別最適化」と「習慣化」をDiscordで実現します。</p>
 
         <ul class="features-list">
+          <!-- ① 自動チャンネル生成 -->
           <li class="feature-card reveal">
             <div class="f-icon">🔑</div>
             <div class="f-body">
               <h3>① 専用チャンネルを自動生成</h3>
-              <p>サーバーに参加すると、あなたとBotしか見れない鍵付きチャンネルが自動で作られ、学習の全てがそこで完結します。</p>
+              <p>サーバーに参加すると、あなたとBotしか見れない鍵付きチャンネルが自動で作られます。</p>
             </div>
           </li>
 
+          <!-- ② 英語3要素の網羅 -->
           <li class="feature-card reveal">
             <div class="f-icon">📚</div>
             <div class="f-body">
               <h3>② 英語の3要素を網羅</h3>
-              <p>「英単語(SRS)」「英文解釈(SVOCM)」「長文読解」の3つを、レベルと目標に合わせてパーソナライズし出題します。</p>
+              <p>英単語・英文解釈・長文読解の3つをパーソナライズ出題。</p>
             </div>
           </li>
 
+          <!-- ③ ボタン操作中心 -->
           <li class="feature-card reveal">
             <div class="f-icon">👆</div>
             <div class="f-body">
               <h3>③ ボタン中心の直感操作</h3>
-              <p>コマンドは不要。常に表示されるボタン（BAM）を押していくだけで、学習から復習までがスムーズに進みます。</p>
+              <p>コマンド入力不要。ボタン(BAM)を押すだけで学習可能。</p>
             </div>
           </li>
         </ul>
-        </div>
+      </div>
     </section>
 
+    <!-- 主な学習機能 -->
     <section id="features" class="section section-dark">
       <div class="container">
         <h2 class="section-title">主な学習機能</h2>
 
         <div class="cards">
+          <!-- 英単語学習デモ付き -->
           <article class="card reveal">
             <h4>✅ 英単語 (SRS学習)</h4>
-            <p>10問1セットで出題。「覚えた(◎)」/「忘れそう(△)」ボタンを押すだけで、忘却曲線(SRS)に自動で反映。最適なタイミングで「苦手テスト」を出題します。</p>
-            
+            <p>ボタンを押すだけでSRSに反映される仕組み。</p>
+
+            <!-- 簡易インタラクティブデモ -->
             <div id="interactiveDemo" class="demo-widget">
               <p class="demo-question">Q. "He is ( ) to become a doctor."<br>（彼は医者になる運命だ）</p>
               <div class="demo-options">
@@ -154,25 +185,29 @@
               <p id="demoResult" class="demo-result"></p>
             </div>
           </article>
-          
+
+          <!-- 英文解釈機能 -->
           <article class="card reveal">
             <h4>✅ 英文解釈 (SVOCM)</h4>
-            <p>ボタンでモーダルを開き、SVOCMを入力。LLM(Dify)が即座に自動採点し、構文の解説を表示します。「もう少し難しく/やさしく」ボタンで難易度も自動調整。</p>
+            <p>SVOCM入力→AI自動採点→構文解説を即時表示。</p>
           </article>
 
+          <!-- 長文読解機能 -->
           <article class="card reveal">
             <h4>✅ 長文読解 (TOEIC/共テ風)</h4>
-            <p>TOEICや共通テスト形式の長文に4択ボタンで回答。回答後は、正解の根拠となった本文の箇所がハイライトされ、効率的に復習できます。</p>
+            <p>回答後に根拠本文をハイライト。効率的な復習をサポート。</p>
           </article>
         </div>
-        </div>
+      </div>
     </section>
 
+    <!-- スライダー（学習風景） -->
     <section class="section">
       <div class="container">
         <h2 class="section-title">Discordでの学習イメージ</h2>
-        <p class="section-subtext">あなた専用の鍵付きチャンネルで、このように学習が進みます。</p>
+        <p class="section-subtext">鍵付きチャンネルでの学習イメージ。</p>
 
+        <!-- スライダー本体 -->
         <div class="slider" id="slider">
           <div class="slides" id="slides">
             <div class="slide"><img src="images/slide1.jpg" alt="学習風景1" loading="lazy"></div>
@@ -180,6 +215,7 @@
             <div class="slide"><img src="images/slide3.jpg" alt="学習風景3" loading="lazy"></div>
           </div>
           
+          <!-- スライダー制御ボタン -->
           <div class="slider-controls">
             <div class="slider-dots" id="dots"></div>
             <button id="sliderToggleBtn" class="slider-toggle" aria-label="スライドショーを停止">
@@ -191,98 +227,78 @@
       </div>
     </section>
 
+    <!-- 使い方セクション -->
     <section id="how-to-use" class="section section-dark">
       <div class="container">
         <h2 class="section-title">使い方 (簡単3ステップ)</h2>
         <div class="cards">
-          <article class="card reveal">
-            <h4>Step 1: サーバーに参加</h4>
-            <p>まずは「Discordに参加する」ボタンから、Winglish公式サーバーに参加します。</p>
-          </article>
-          <article class="card reveal">
-            <h4>Step 2: オンボーディング回答</h4>
-            <p>参加時に表示される簡単な質問（現在の英語レベルや目標）に答えます。</p>
-          </article>
-          <article class="card reveal">
-            <h4>Step 3: 学習開始</h4>
-            <p>回答が完了すると、あなた専用の鍵付きチャンネル（例: #winglish-kouhei）が自動で作成され、すぐに学習を開始できます。</p>
-          </article>
+          <article class="card reveal"><h4>Step 1: サーバーに参加</h4><p>まずはDiscordサーバーに参加。</p></article>
+          <article class="card reveal"><h4>Step 2: オンボーディング回答</h4><p>レベルや目標を設定。</p></article>
+          <article class="card reveal"><h4>Step 3: 学習開始</h4><p>自動生成チャンネルで学習スタート。</p></article>
         </div>
       </div>
     </section>
+
+    <!-- 操作性（BAM） -->
     <section id="bam-design" class="section">
       <div class="container">
         <h2 class="section-title">コマンド不要の操作体験 (BAM)</h2>
         <div class="card reveal">
-          <p>Winglishは `/quiz` や `/review` のようなスラッシュコマンドを覚える必要はありません。<br>
-          常に表示されている最新のボタン（BAM: Button Action Message）を押していくだけで、「英単語」「英文解釈」「長文読解」のすべての学習が直感的に完結します。</p>
+          <p>常に最新のボタンで直感的に操作できるUI設計。</p>
         </div>
       </div>
     </section>
+
+    <!-- アップデート予定 -->
     <section id="updates" class="section section-dark">
       <div class="container">
         <h2 class="section-title">今後のアップデート予定</h2>
         <ul class="updates-list reveal">
-          <li>🎤 スピーキング練習（開発予定） — 音声認識＋AI発音チェック</li>
-          <li>🎧 リスニング演習（開発予定） — 英検／共通テスト／日常英会話形式</li>
-          <li>🤖 AI学習分析（検討中） — 苦手語彙や理解速度を自動で可視化</li>
+          <li>🎤 スピーキング練習（開発予定）</li>
+          <li>🎧 リスニング演習（開発予定）</li>
+          <li>🤖 AI学習分析（検討中）</li>
         </ul>
-        </div>
+      </div>
     </section>
 
+    <!-- ペルソナ紹介 -->
     <section id="persona" class="section">
       <div class="container">
         <h2 class="section-title">こんな悩みを解決します</h2>
         <div class="persona-cards">
-          <div class="persona reveal"> <h4>高2・英検2級</h4>
-            <p>悩み：単語が覚えられない → 解決：「覚えた(◎) / 忘れそう(△)」ボタンと「苦手テスト」でSRS学習を自動化</p>
-          </div>
-          <div class="persona reveal"> <h4>高3・共通テスト</h4>
-            <p>悩み：長文スピード不足 → 解決：「長文読解」と「英文解釈(SVOCM)」で読解の精度と速度を両立</p>
-          </div>
-          <div class="persona reveal"> <h4>高1・文法が苦手</h4>
-            <p>悩み：SVOCがわからない → 解決：「英文解釈(SVOCM)」モーダル入力とLLMの自動採点・解説で基礎を固める</p>
-          </div>
+          <div class="persona reveal"><h4>高2・英検2級</h4><p>単語学習の自動化。</p></div>
+          <div class="persona reveal"><h4>高3・共通テスト</h4><p>長文スピードを強化。</p></div>
+          <div class="persona reveal"><h4>高1・文法が苦手</h4><p>SVOCMで基礎固め。</p></div>
         </div>
-        </div>
+      </div>
     </section>
 
+    <!-- ユーザーの声 -->
     <section class="section section-dark">
       <div class="container">
         <h2 class="section-title">ユーザーの声（仮）</h2>
-        <blockquote class="voice reveal"> <p>「単語帳を開く気力がない日でも、Discordの通知で5問だけならできる。」</p>
-          <p>「SVOCを自分で入力するのは緊張したけど、即採点と解説が分かりやすかった。」</p>
-          <p>「続けられてる自分が初めて嬉しいBotかも。」</p>
+        <blockquote class="voice reveal">
+          <p>「通知で少しずつ続けられる」などの感想。</p>
         </blockquote>
       </div>
     </section>
 
+    <!-- FAQ（よくある質問） -->
     <section id="faq" class="section">
       <div class="container">
         <h2 class="section-title">よくある質問（FAQ）</h2>
-        <details class="faq reveal"> <summary>Q. 勉強が苦手でも使えますか？</summary>
-          <p>→ 大丈夫です。ボタン操作中心で、あなたのレベルに合わせた問題が自動で出題されます。</p>
-        </details>
 
-        <details class="faq reveal"> <summary>Q. 英検以外にも使えますか？</summary>
-          <p>→ はい。「共通テスト」「TOEIC」などの目標に合わせて、出題される問題（特に長文読解）が最適化されます。</p>
-        </details>
-        
-        <details class="faq reveal"> <summary>Q. Discordサーバーを持っていないと使えませんか？</summary>
-          <p>→ Winglish公式サーバーに参加するだけで利用可能です。参加するとすぐにあなた専用の鍵付きチャンネルが作られます。</p>
-        </details>
-        <details class="faq reveal"> <summary>Q. スマホだけで完結できますか？</summary>
-          <p>→ はい。Discordアプリが入っていれば、PCでもスマホでも同じように学習できます。</p>
-        </details>
-        <details class="faq reveal"> <summary>Q. 料金はかかりますか？</summary>
-          <p>→ 現在のMVP（最小機能版）期間中は、すべての機能を無料でご利用いただけます。</p>
-        </details>
-        <details class="faq reveal"> <summary>Q. ゲーム要素やランキング機能はないのですか？</summary>
-          <p>→ あえて入れていません。「競争」よりも「確実な成長」と「習慣化」を重視しているためです。（※アナウンスチャンネルで週間ランキング等を発表予定です）</p>
-        </details>
+        <!-- <details>要素で折りたたみ式QA -->
+        <details class="faq reveal"><summary>Q. 勉強が苦手でも使えますか？</summary><p>→ 大丈夫です。</p></details>
+        <details class="faq reveal"><summary>Q. 英検以外にも使えますか？</summary><p>→ はい。</p></details>
+        <details class="faq reveal"><summary>Q. Discordサーバーが必要？</summary><p>→ 公式サーバー参加のみでOK。</p></details>
+        <details class="faq reveal"><summary>Q. スマホだけで完結？</summary><p>→ はい。</p></details>
+        <details class="faq reveal"><summary>Q. 料金は？</summary><p>→ MVP期間中は無料。</p></details>
+        <details class="faq reveal"><summary>Q. ランキング機能は？</summary><p>→ 今後アナウンスで対応予定。</p></details>
       </div>
     </section>
 
+    <!-- 最終CTA（再行動喚起） -->
     <section class="section cta">
       <div class="container">
         <h2>未来の自分を助けるのは、今日の学習。</h2>
@@ -291,27 +307,33 @@
           <a class="btn primary" href="https://discord.gg/eSC9a4erQx" target="_blank" rel="noopener noreferrer">✅ 専用チャンネルを作成する</a>
           <a class="btn ghost" href="#how-to-use">📘 使い方を見る</a>
         </div>
-        </div>
+      </div>
     </section>
   </main>
 
+  <!-- ===========================
+        フッター
+  ============================ -->
   <footer class="site-footer">
     <div class="container">
       <small>© 2025 Winglish — English for the Brave.</small>
     </div>
   </footer>
 
+  <!-- メインスクリプト -->
   <script src="script.js"></script>
 
+  <!-- ページトップボタン -->
   <a href="#hero" id="pageTopBtn" class="page-top-btn" aria-label="ページトップに戻る">
     <span>↑</span>
   </a>
 
+  <!-- スマホ固定フッターCTA -->
   <div class="sticky-footer-cta" id="stickyFooter">
     <div class="container sticky-footer-inner">
       <p>あなた専用の学習チャンネルを、今すぐ作成。</p>
       <a class="btn primary" href="https://discord.gg/eSC9a4erQx" target="_blank" rel="noopener noreferrer">▶ Discordに参加する</a>
     </div>
   </div>
-  </body>
+</body>
 </html>

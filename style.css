@@ -1,3 +1,22 @@
+/* style.css - Winglish ランディングページ用スタイルシート */
+/* 説明コメント: 
+   このCSSは、script.jsとindex.htmlと密接に連携しています。
+   特に以下の点に注目してください。
+
+   1. CSS変数 (--color-bgなど): 
+      :rootで基本を定義し、[data-theme="light"] と [data-theme="dark"] で
+      値を切り替えています。
+      script.jsのテーマ切替機能は、<body>タグの `data-theme` 属性を
+      書き換えるだけで、CSSが自動的に全体の配色を変更します。
+
+   2. JSによるクラス制御 (例: .is-visible, .open, .is-scrolled):
+      script.js がスクロールやクリックを検知して、
+      HTML要素に 'is-visible' や 'open' などのクラスを付与/削除します。
+      CSS側では、そのクラスが付与された時のスタイル (例: .reveal.is-visible) を
+      あらかじめ定義しておくことで、アニメーションや表示/非表示を実現しています。
+*/
+
+
 /* ==============================
    テーマ変数 (Discord風デザイン)
 ============================== */
@@ -15,11 +34,11 @@
 }
 
 /* テーマ①: Discord Light Mode
-   data-theme="light"
+   ★JS連携: script.js により <body data-theme="light"> が設定された場合に適用
 */
 [data-theme="light"] {
   --color-bg: #fff; /* メイン背景 */
-  --color-bg-alt: #f2f3f5; /* セクション背景 */
+  --color-bg-alt: #f2f3f5; /* セクション背景 (例: #features) */
   --color-text: #2e3338; /* メインテキスト */
   --color-text-sub: #5c626b; /* サブテキスト */
   --color-surface-bg: #f2f3f5; /* カード背景 */
@@ -33,12 +52,12 @@
   --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.05);
   --shadow-btn: 0 4px 10px rgba(114, 137, 218, 0.3);
   --backdrop-filter: none; /* ガラスモダン廃止 */
-  --color-demo-correct: #22C55E;
-  --color-demo-wrong: #EF4444;
+  --color-demo-correct: #22C55E; /* デモ正解色 */
+  --color-demo-wrong: #EF4444; /* デモ不正解色 */
 }
 
 /* テーマ②: Discord Dark Mode
-   data-theme="dark"
+   ★JS連携: script.js により <body data-theme="dark"> が設定された場合に適用
 */
 [data-theme="dark"] {
   --color-bg: #36393f; /* メイン背景 */
@@ -65,16 +84,20 @@
 ============================== */
 
 html {
+  /* <a> (例: #pageTopBtn) がクリックされた時のスクロールを滑らかに */
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   font-family: var(--font-family-base);
+  /* ★JS連携: テーマ切替時に背景色と文字色がCSS変数経由で切り替わる */
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  /* テーマ切替時のフェードアニメーション */
   transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+  /* 追従フッター(#stickyFooter) の高さ分(80px)の余白を確保 */
   padding-bottom: 80px; 
 }
 
@@ -91,6 +114,7 @@ body {
   left: 0;
   height: 4px;
   background: var(--color-accent-light);
+  /* ★JS連携: script.js がスクロールに応じて 'width' を 0%〜100% まで変更する */
   width: 0%;
   z-index: 2000;
 }
@@ -100,7 +124,7 @@ body {
    ヘッダー (Discord風)
 ============================== */
 .site-header {
-  position: fixed;
+  position: fixed; /* 画面上部に固定 */
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -121,16 +145,18 @@ body {
   transition: padding 0.3s ease-out;
 }
 
-/* スクロール時のヘッダースタイル */
+/* ★JS連携: script.js が 50px スクロールを検知し、
+   <header class="site-header"> に .is-scrolled を付与した時のスタイル */
 .site-header.is-scrolled {
   background: var(--color-header-bg); 
   backdrop-filter: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* スクロール時に影を追加 */
 }
 [data-theme="dark"] .site-header.is-scrolled {
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
+/* スクロール時、ヘッダーの高さを詰める */
 .site-header.is-scrolled .header-inner {
   padding: 8px 0;
 }
@@ -142,7 +168,7 @@ body {
   color: var(--color-accent);
 }
 
-/* テーマ切り替えボタン */
+/* テーマ切り替えボタン (#themeToggleBtn) */
 .theme-toggle {
   background: none;
   border: none;
@@ -158,9 +184,11 @@ body {
   display: block;
   transition: transform 0.3s ease;
 }
+/* ★JS連携: <body data-theme="light"> の時、太陽アイコンを隠す */
 [data-theme="light"] .theme-toggle .icon-sun { 
   display: none; 
 }
+/* ★JS連携: <body data-theme="dark"> の時、月アイコンを隠す */
 [data-theme="dark"] .theme-toggle .icon-moon { 
   display: none; 
 }
@@ -168,6 +196,7 @@ body {
 .theme-toggle:hover .icon-moon { transform: rotate(15deg); }
 
 
+/* ハンバーガーボタン (#menuBtn) */
 .hamburger {
   font-size: 1.6rem;
   background: none;
@@ -180,7 +209,7 @@ body {
    グローバルナビ (Discord風)
 ============================== */
 .global-nav {
-  display: none;
+  display: none; /* 通常は非表示 (SP) */
   flex-direction: column;
   background: var(--color-header-bg);
   /* ▼ ガラスモダン廃止 ▼ */
@@ -208,18 +237,21 @@ body {
   color: var(--color-accent);
 }
 
-/* スクロール連動ハイライト */
+/* ★JS連携: script.js (IntersectionObserver) が、
+   現在表示中のセクションに対応する <a> タグに .nav-active を付与した時のスタイル */
 .global-nav a.nav-active {
   color: var(--color-accent);
-  font-weight: bold;
+  font-weight: bold; /* 現在地を太字にする */
 }
 
+/* ★JS連携: script.js が #menuBtn クリックで
+   <nav id="globalNav"> に .open を付与した時のスタイル */
 .global-nav.open {
-  display: flex;
+  display: flex; /* SPメニューを表示状態にする */
 }
 
 /* ==============================
-   Hero セクション
+   Hero セクション (#hero)
 ============================== */
 .hero {
   position: relative;
@@ -233,7 +265,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* 動画をアスペクト比維持しつつ全体に広げる */
 }
 
 .hero-overlay {
@@ -242,9 +274,10 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3); /* 動画の上に暗いフィルター */
   transition: background var(--transition-speed) ease;
 }
+/* ★JS連携: ダークテーマ時はフィルターの色も変える */
 [data-theme="dark"] .hero-overlay {
   background: rgba(30, 41, 59, 0.4);
 }
@@ -292,7 +325,7 @@ body {
 }
 
 .btn.primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* 少し浮き上がる */
   filter: brightness(1.1);
 }
 
@@ -322,7 +355,9 @@ body {
   color: var(--color-text-sub);
 }
 
+/* ★JS連携: スクロールナビが参照するアンカー(#)の位置調整用 */
 section[id] {
+  /* 固定ヘッダーの高さ分(約80px)、アンカー位置を下げる */
   scroll-margin-top: 80px;
 }
 
@@ -350,7 +385,7 @@ section[id] {
 
 /* ▼ 3Dホバー廃止 → シンプルなホバーに変更 ▼ */
 .feature-card:hover, .card:hover, .persona:hover, .faq:hover, .voice:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px); /* シンプルに少し浮き上がる */
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 [data-theme="dark"] .feature-card:hover, 
@@ -361,7 +396,7 @@ section[id] {
   box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
 
-/* 3Dホバーのラッパー（不要になったが、JSエラー回避のため残す） */
+/* 3Dホバーのラッパー（HTMLに残っている可能性があるため、念のため無効化） */
 .card-3d-wrap {
   perspective: none;
 }
@@ -369,7 +404,7 @@ section[id] {
 
 /* .section-dark (Discord風) */
 .section-dark {
-  background: var(--color-bg-alt);
+  background: var(--color-bg-alt); /* 背景色を切り替える */
   transition: background var(--transition-speed) ease;
 }
 
@@ -403,6 +438,7 @@ section[id] {
   gap: 20px;
 }
 
+/* PC幅 (768px以上) でグリッドを3カラムにする */
 @media (min-width: 768px) {
   .features-list, .cards, .persona-cards {
     grid-template-columns: repeat(3, 1fr);
@@ -413,6 +449,7 @@ section[id] {
 /* ==============================
    スクロールアニメーション (Intersection Observer)
 ============================== */
+/* ★JS連携: .reveal は script.js (IntersectionObserver) の監視対象 */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -420,18 +457,21 @@ section[id] {
   transition: opacity 0.8s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
 }
 
+/* ★JS連携: script.js が要素を「画面内」と判定し、
+   .is-visible クラスを付与した時のスタイル (フェードイン完了状態) */
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
 }
 
+/* アニメーションに遅延(delay)をつけ、順番に表示されるように見せる */
 .reveal:nth-child(2) { transition-delay: 0.1s; }
 .reveal:nth-child(3) { transition-delay: 0.2s; }
 .reveal:nth-child(4) { transition-delay: 0.3s; }
 
 /* ==============================
-   スライダーUI改善
+   スライダーUI改善 (#slider)
 ============================== */
 .slider {
   position: relative;
@@ -444,11 +484,13 @@ section[id] {
 
 .slides {
   display: flex;
+  /* ★JS連携: script.js が 'transform' を translateX(-100%) などに書き換える */
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* ★JS連携: script.js がスワイプ中 (onTouchStart) に付与するクラス */
 .slides.is-swiping {
-  transition: none;
+  transition: none; /* スワイプ中はアニメーションを切り、指に追従させる */
 }
 
 .slide img {
@@ -494,13 +536,14 @@ section[id] {
   transition: all 0.4s ease;
 }
 
+/* ★JS連携: script.js が現在のスライドに合わせて .active クラスを付け替える */
 .slider-dots .dot.active {
   opacity: 1;
   transform: scale(1.3);
-  background: var(--color-accent-light);
+  background: var(--color-accent-light); /* アクティブなドットの色 */
 }
 
-/* ▼▼▼ インタラクティブ・デモ (Discord風) ▼▼▼ */
+/* ▼▼▼ インタラクティブ・デモ (Discord風) (#interactiveDemo) ▼▼▼ */
 .demo-widget {
   border-top: 1px solid var(--color-surface-border);
   margin-top: 20px;
@@ -535,23 +578,27 @@ section[id] {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
-/* JSで付与されるクラス */
+
+/* ★JS連携: script.js が正解ボタン (data-correct="true") を押した時に付与 */
 .demo-options button.correct {
   background: var(--color-demo-correct);
   color: #fff;
   border-color: var(--color-demo-correct);
 }
+/* ★JS連携: script.js が不正解ボタン (data-correct="false") を押した時に付与 */
 .demo-options button.wrong {
   background: var(--color-demo-wrong);
   color: #fff;
   border-color: var(--color-demo-wrong);
   opacity: 0.7;
 }
+
 .demo-result {
   margin-top: 10px;
   font-weight: bold;
-  height: 1.2em;
+  height: 1.2em; /* 結果表示のガタつきを防ぐため高さを確保 */
 }
+/* ★JS連携: script.js が結果表示欄 (#demoResult) に付与 */
 .demo-result.correct {
   color: var(--color-demo-correct);
 }
@@ -573,6 +620,7 @@ section[id] {
   color: var(--color-accent);
   transition: color var(--transition-speed) ease;
 }
+/* ★JS連携: script.js が排他制御 (toggleイベント) する <details> が開いた時のスタイル */
 .faq[open] {
   background: var(--color-bg-alt);
 }
@@ -581,7 +629,7 @@ section[id] {
   color: var(--color-text-sub);
 }
 
-/* CTAセクション */
+/* 最終CTAセクション */
 .section.cta {
   background: var(--color-bg-alt);
   border-top: 1px solid var(--color-surface-border);
@@ -609,7 +657,7 @@ section[id] {
    追加したボタンスタイル
 ============================== */
 
-/* スライダー停止/再生ボタン */
+/* スライダー停止/再生ボタン (#sliderToggleBtn) */
 .slider-toggle {
   background: none;
   border: none;
@@ -626,18 +674,19 @@ section[id] {
 }
 
 .slider-toggle .icon-play {
-  display: none;
+  display: none; /* 再生アイコンは通常非表示 */
 }
 
+/* ★JS連携: script.js がスライダー一時停止時に <div id="slider"> に付与 */
 .slider.is-paused .slider-toggle .icon-pause {
-  display: none;
+  display: none; /* 停止アイコンを隠す */
 }
 .slider.is-paused .slider-toggle .icon-play {
-  display: block;
+  display: block; /* 再生アイコンを表示 */
 }
 
 /* ==============================
-   ページトップに戻るボタン
+   ページトップに戻るボタン (#pageTopBtn)
 ============================== */
 .page-top-btn {
   position: fixed;
@@ -656,6 +705,7 @@ section[id] {
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   
+  /* 初期状態 (非表示) */
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
@@ -664,6 +714,8 @@ section[id] {
   z-index: 900;
 }
 
+/* ★JS連携: script.js が 400px スクロールを検知し、
+   <a id="pageTopBtn"> に .is-visible を付与した時のスタイル (表示状態) */
 .page-top-btn.is-visible {
   opacity: 1;
   visibility: visible;
@@ -676,7 +728,7 @@ section[id] {
 }
 
 /* ==============================
-   ▼▼▼ 追従CTAフッター (Discord風) ▼▼▼
+   ▼▼▼ 追従CTAフッター (Discord風) (#stickyFooter) ▼▼▼
 ============================== */
 .sticky-footer-cta {
   position: fixed;
@@ -692,6 +744,7 @@ section[id] {
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
   z-index: 800; 
   
+  /* 初期状態 (非表示) */
   opacity: 0;
   visibility: hidden;
   transform: translateY(100%);
@@ -701,7 +754,8 @@ section[id] {
   box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* JSで .is-visible を付与 */
+/* ★JS連携: script.js (IntersectionObserver) が #hero が画面外に出たのを検知し、
+   <div id="stickyFooter"> に .is-visible を付与した時のスタイル (表示状態) */
 .sticky-footer-cta.is-visible {
   opacity: 1;
   visibility: visible;
@@ -723,7 +777,7 @@ section[id] {
   padding: 8px 16px;
   font-size: 0.9rem;
 }
-/* スマホではテキストを隠す */
+/* スマホ (600px以下) ではテキストを隠し、ボタンを中央寄せ */
 @media (max-width: 600px) {
   .sticky-footer-inner p {
     display: none;
@@ -738,16 +792,19 @@ section[id] {
 /* ==============================
    アクセシビリティ対応（動きの抑制）
 ============================== */
+/* ユーザーがOS/ブラウザで「動きを減らす」設定にしている場合に適用 */
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto; /* スムーススクロールを無効化 */
   }
+  /* フェードインアニメーションを無効化 (最初から表示) */
   .reveal {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
     transition: none;
   }
+  /* 全てのアニメーション・トランジションをほぼ無効化 */
   *,
   *::before,
   *::after {
@@ -764,10 +821,11 @@ section[id] {
     perspective: none;
   }
   .feature-card, .card, .persona, .faq, .voice {
+    /* テーマ切替の背景色変更だけは許可 */
     transition: background var(--transition-speed) ease;
   }
   .feature-card:hover, .card:hover, .persona:hover, .faq:hover, .voice:hover {
-    transform: none;
+    transform: none; /* ホバー時の浮き上がりを無効化 */
   }
   /* 追従フッターのアニメーションを無効化 */
   .sticky-footer-cta {
